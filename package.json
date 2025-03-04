@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/CMSC-100-2S24-25/exer-05-creating-web-servers-using-express-js-teiseky#readme",
   "dependencies": {
+    "axios": "^1.8.1",
     "express": "^4.21.2"
   }
 }
