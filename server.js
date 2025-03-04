@@ -8,23 +8,23 @@ const BOOKS_FILE = path.join(__dirname, 'books.txt');
 
 app.use(express.json());
 
+// home route
 app.get('/', (req, res) => {
     res.send('HELLO PERD');
 });
-
 
 // add a book
 app.post('/add-book', (req, res) => {
     const { bookName, isbn, author, yearPublished } = req.body;
 
-    // validate fields if e
+    // check if fields are filled
     if (!bookName || !isbn || !author || !yearPublished) {
         return res.json({ success: false });
     }
 
     const bookEntry = `${bookName},${isbn},${author},${yearPublished}\n`;
     
-    // append book
+    // append book to file
     fs.appendFile(BOOKS_FILE, bookEntry, (err) => {
         if (err) {
             return res.json({ success: false });
@@ -33,13 +33,14 @@ app.post('/add-book', (req, res) => {
     });
 });
 
-// GET: Find book by ISBN and Author
+// find book by isbn and author
 app.get('/find-by-isbn-author', (req, res) => {
     const { isbn, author } = req.query;
     if (!isbn || !author) {
         return res.json([]);
     }
     
+    // read books from file
     fs.readFile(BOOKS_FILE, 'utf8', (err, data) => {
         if (err) return res.json([]);
 
@@ -49,6 +50,7 @@ app.get('/find-by-isbn-author', (req, res) => {
             return bookIsbn === isbn && bookAuthor === author;
         });
 
+        // return matching books
         res.json(results.map(line => {
             const [bookName, bookIsbn, bookAuthor, yearPublished] = line.split(',');
             return { bookName, isbn: bookIsbn, author: bookAuthor, yearPublished };
@@ -56,13 +58,14 @@ app.get('/find-by-isbn-author', (req, res) => {
     });
 });
 
-// GET: Find book by Author only
+// find books by author only
 app.get('/find-by-author', (req, res) => {
     const { author } = req.query;
     if (!author) {
         return res.json([]);
     }
     
+    // read books from file
     fs.readFile(BOOKS_FILE, 'utf8', (err, data) => {
         if (err) return res.json([]);
 
@@ -72,6 +75,7 @@ app.get('/find-by-author', (req, res) => {
             return bookAuthor === author;
         });
 
+        // return matching books
         res.json(results.map(line => {
             const [bookName, bookIsbn, bookAuthor, yearPublished] = line.split(',');
             return { bookName, isbn: bookIsbn, author: bookAuthor, yearPublished };
@@ -79,7 +83,7 @@ app.get('/find-by-author', (req, res) => {
     });
 });
 
-// Start server
+// start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
