@@ -1,1 +1,7 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fO1z5voz)
+# EXPRESS JS
+
+##SEBASTIAN ANDREI P. MERDEGIA
+##C1L
+##2023-09278
+
+##A simple Express.js web server that allows users to store and retrieve book details. The application provides API endpoints to:
